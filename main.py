@@ -156,6 +156,20 @@ def insert_in_db(id, name, description, image, coords, questions, answers):
         print("Failed to insert data into sqlite table (on_confirmation)", error)
 
 
+def init_db():
+    try:
+        con = sql.connect("geocaches.db")
+        cur = con.cursor()
+        with open('structure.sql') as f:
+            insertion = f.read()
+
+        cur.executescript(insertion)
+        con.commit()
+        cur.close()
+
+    except sql.Error as error:
+        print("Failed to insert data into sqlite table (on_confirmation)", error)
+
 def check_coords(c: str):
     try:
         if (
@@ -844,5 +858,6 @@ def creation_successful(message: Message, code: str):
             parse_mode="Markdown",
         )
 
+init_db()
 
 bot.infinity_polling()
