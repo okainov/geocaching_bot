@@ -5,7 +5,7 @@ RUN mkdir /app
 COPY requirements.txt /app
 
 WORKDIR /app
-RUN pip install -r requirements.txt
+RUN pip install -U pip && pip install -r requirements.txt
 
 ADD . /app
 
