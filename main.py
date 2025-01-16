@@ -220,6 +220,7 @@ def start(message: Message):
             )
         else:
             if check_if_in_geocaches(code):
+                print(f"Geocache {code} found, processing!")
                 data = get_geocaches_data(code)
 
                 button_start = InlineKeyboardButton(
@@ -228,6 +229,8 @@ def start(message: Message):
                 keyboard = InlineKeyboardMarkup()
                 keyboard.add(button_start)
 
+                print("Trying to send photo")
+                print(f"Debug: data={data}")
                 bot.send_photo(
                     message.chat.id,
                     data[3],
@@ -246,9 +249,10 @@ def start(message: Message):
                     "❌ Такого тайника не существует! Напиши /start, чтобы создать его.",
                 )
     except Exception as e:
+        print(e)
         bot.send_message(
             message.chat.id,
-            f"⛔ Возникла ошибка, пожалуйста, сообщите об этом @FoxFil\n\nОшибка:\n\n`{e}`",
+            f"⛔ Возникла ошибка, пожалуйста, сообщите об этом @DGSolodkov\n\nОшибка:\n\n`{e}`",
             parse_mode="Markdown",
         )
 
