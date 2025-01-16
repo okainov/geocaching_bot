@@ -231,9 +231,11 @@ def start(message: Message):
 
                 print("Trying to send photo")
                 print(f"Debug: data={data}")
-                bot.send_photo(
+                bot.send_message(
                     message.chat.id,
-                    data[3],
+                #bot.send_photo(
+                #    message.chat.id,
+                #    data[3],
                     f"""Привет! Ты попал на страницу тайника *{data[0]}*.
 
 *{data[1]}*
@@ -798,7 +800,7 @@ def creation_final(message: Message, data: list):
             keyboard = InlineKeyboardMarkup()
             keyboard.add(button_confirm, button_repeat)
 
-            bot.send_photo(message.chat.id, data[3])
+            # bot.send_photo(message.chat.id, data[3])
 
             bot.send_message(
                 message.chat.id,
