@@ -58,6 +58,7 @@ def get_geocaches_data(code):
     ).fetchall()[0]
 
     cur.close()
+    print(f"Fetched data for {code}: {data}")
 
     return data
 
@@ -219,6 +220,16 @@ def start(message: Message):
                 reply_markup=keyboard,
             )
         else:
+            con = sql.connect("geocaches.db")
+            cur = con.cursor()
+            data = cur.execute(
+                   f"""SELECT * FROM geocaches """
+                   ).fetchall()
+            cur.close()
+            #for c in data:
+            #     bot.send_message(message.chat.id, str(c))
+            #bot.send_message(message.chat.id, f"Some caches fetched: {data}")
+
             if check_if_in_geocaches(code):
                 print(f"Geocache {code} found, processing!")
                 data = get_geocaches_data(code)
@@ -248,7 +259,7 @@ def start(message: Message):
             else:
                 bot.send_message(
                     message.chat.id,
-                    "❌ Такого тайника не существует! Напиши /start, чтобы создать его.",
+                    f"❌ Такого тайника {code} не существует! Напиши /start, чтобы создать его.",
                 )
     except Exception as e:
         print(e)
